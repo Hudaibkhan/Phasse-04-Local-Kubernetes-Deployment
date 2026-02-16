@@ -1,0 +1,100 @@
+openapi: 3.0.3
+info:
+  title: Evolution Todo Authentication API
+  description: API for user authentication in the Evolution Todo application
+  version: 1.0.0
+paths:
+  /api/auth/register:
+    post:
+      summary: Register a new user account
+      description: Creates a new user account with the provided credentials
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - username
+                - email
+                - password
+              properties:
+                username:
+                  type: string
+                  description: The desired username (3-30 alphanumeric characters)
+                  minLength: 3
+                  maxLength: 30
+                  pattern: "^[a-zA-Z0-9_-]+$"
+                email:
+                  type: string
+                  description: The user's email address
+                  format: email
+                password:
+                  type: string
+                  description: The user's password
+                  minLength: 8
+      responses:
+        '200':
+          description: User registered successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  message:
+                    type: string
+                    example: "User registered successfully"
+                  user:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                        description: The unique identifier for the user
+                      username:
+                        type: string
+                        description: The user's username
+                      email:
+                        type: string
+                        description: The user's email
+        '400':
+          description: Bad request - validation error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  message:
+                    type: string
+                    example: "Invalid input data"
+        '409':
+          description: Conflict - username or email already exists
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  message:
+                    type: string
+                    example: "Username or email already exists"
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  message:
+                    type: string
+                    example: "Internal server error occurred"

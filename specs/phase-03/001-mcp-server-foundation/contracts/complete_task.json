@@ -1,0 +1,66 @@
+{
+  "name": "complete_task",
+  "description": "Mark a task as completed",
+  "input_schema": {
+    "type": "object",
+    "properties": {
+      "user_id": {
+        "type": "string",
+        "format": "uuid",
+        "description": "UUID of the user who owns the task"
+      },
+      "task_id": {
+        "type": "string",
+        "format": "uuid",
+        "description": "UUID of the task to complete"
+      }
+    },
+    "required": ["user_id", "task_id"]
+  },
+  "output_schema": {
+    "type": "object",
+    "properties": {
+      "task_id": {
+        "type": "string",
+        "format": "uuid",
+        "description": "UUID of the completed task"
+      },
+      "status": {
+        "type": "string",
+        "enum": ["completed"],
+        "description": "Status of the task (always 'completed')"
+      },
+      "title": {
+        "type": "string",
+        "description": "Title of the completed task"
+      },
+      "completed": {
+        "type": "boolean",
+        "description": "Completion status (always true)"
+      }
+    },
+    "required": ["task_id", "status", "title", "completed"]
+  },
+  "error_codes": [
+    {
+      "code": "TASK_NOT_FOUND",
+      "message": "Task with the specified ID does not exist"
+    },
+    {
+      "code": "UNAUTHORIZED",
+      "message": "User does not own this task"
+    },
+    {
+      "code": "ALREADY_COMPLETED",
+      "message": "Task is already marked as completed"
+    },
+    {
+      "code": "DATABASE_ERROR",
+      "message": "Failed to complete task due to database error"
+    }
+  ],
+  "notes": [
+    "If the task is recurring, completing it will trigger creation of the next occurrence",
+    "Notifications may be generated based on task completion"
+  ]
+}

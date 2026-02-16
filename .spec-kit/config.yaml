@@ -1,0 +1,36 @@
+# Spec-Kit Configuration
+# Phase II: Hackathon Monorepo Structure
+
+project:
+  name: "evolution_todo"
+  type: "monorepo"
+  phase: "II"
+
+structure:
+  specs_root: "specs/"
+  applications:
+    - name: "frontend"
+      path: "frontend/"
+      type: "nextjs-app-router"
+    - name: "backend"
+      path: "backend/"
+      type: "fastapi"
+
+workflow:
+  # Spec-first workflow
+  order:
+    - specify    # Create/update specs
+    - plan       # Architecture decisions
+    - tasks      # Testable tasks
+    - implement  # Code generation
+
+conventions:
+  # Single source of truth
+  source_of_truth: "specs/"
+
+  # No business logic in app folders during Phase II
+  app_folders_purpose: "implementation_only"
+
+  # History tracking
+  phr_root: "history/prompts/"
+  adr_root: "history/adr/"

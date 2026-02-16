@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: todo-app-config
+  labels:
+    app.kubernetes.io/name: config
+    app.kubernetes.io/instance: todo-app
+    app.kubernetes.io/part-of: evolution-todo
+    app.kubernetes.io/managed-by: Helm
+data:
+  CORS_ORIGINS: "http://localhost:3000"
+  NEXT_PUBLIC_API_URL: "http://todo-app-backend:8001"

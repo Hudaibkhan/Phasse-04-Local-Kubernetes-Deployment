@@ -1,0 +1,51 @@
+# Exclude version control
+.git/
+.gitignore
+
+# Exclude environment files
+.env.local
+.env*.local
+.env
+
+# Exclude dependencies (will be installed in container)
+node_modules/
+
+# Exclude build output (will be built in container)
+.next/
+out/
+build/
+dist/
+
+# Exclude testing
+tests/
+coverage/
+.nyc_output/
+
+# Exclude documentation
+*.md
+docs/
+
+# Exclude IDE and editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Exclude logs
+*.log
+logs/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Exclude temporary files
+*.tmp
+.DS_Store
+Thumbs.db
+
+# Exclude TypeScript cache
+*.tsbuildinfo
+
+# Exclude ESLint cache
+.eslintcache

@@ -1,0 +1,103 @@
+{
+  "name": "list_tasks",
+  "description": "Retrieve tasks for a user with optional status filter",
+  "input_schema": {
+    "type": "object",
+    "properties": {
+      "user_id": {
+        "type": "string",
+        "format": "uuid",
+        "description": "UUID of the user whose tasks to retrieve"
+      },
+      "status": {
+        "type": "string",
+        "enum": ["all", "pending", "completed"],
+        "default": "all",
+        "description": "Filter tasks by status (all, pending, or completed)"
+      }
+    },
+    "required": ["user_id"]
+  },
+  "output_schema": {
+    "type": "object",
+    "properties": {
+      "tasks": {
+        "type": "array",
+        "description": "Array of task objects",
+        "items": {
+          "type": "object",
+          "properties": {
+            "task_id": {
+              "type": "string",
+              "format": "uuid",
+              "description": "UUID of the task"
+            },
+            "title": {
+              "type": "string",
+              "description": "Task title"
+            },
+            "description": {
+              "type": "string",
+              "description": "Task description (may be null)"
+            },
+            "status": {
+              "type": "string",
+              "enum": ["pending", "completed"],
+              "description": "Current status of the task"
+            },
+            "completed": {
+              "type": "boolean",
+              "description": "Whether the task is completed"
+            },
+            "created_at": {
+              "type": "string",
+              "format": "date-time",
+              "description": "When the task was created"
+            },
+            "due_date": {
+              "type": "string",
+              "format": "date-time",
+              "description": "Task due date (may be null)"
+            },
+            "priority": {
+              "type": "string",
+              "enum": ["High", "Medium", "Low"],
+              "description": "Task priority"
+            },
+            "is_recurring": {
+              "type": "boolean",
+              "description": "Whether the task is recurring"
+            },
+            "tags": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "description": "Array of tag names"
+            }
+          },
+          "required": ["task_id", "title", "status", "completed", "created_at"]
+        }
+      },
+      "count": {
+        "type": "integer",
+        "description": "Total number of tasks returned"
+      }
+    },
+    "required": ["tasks", "count"]
+  },
+  "error_codes": [
+    {
+      "code": "INVALID_USER",
+      "message": "User ID does not exist or is invalid"
+    },
+    {
+      "code": "INVALID_STATUS",
+      "message": "Status filter must be 'all', 'pending', or 'completed'"
+    },
+    {
+      "code": "DATABASE_ERROR",
+      "message": "Failed to retrieve tasks due to database error"
+    }
+  ]
+}

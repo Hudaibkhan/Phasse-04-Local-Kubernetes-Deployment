@@ -1,0 +1,59 @@
+{
+  "name": "delete_task",
+  "description": "Delete a task permanently",
+  "input_schema": {
+    "type": "object",
+    "properties": {
+      "user_id": {
+        "type": "string",
+        "format": "uuid",
+        "description": "UUID of the user who owns the task"
+      },
+      "task_id": {
+        "type": "string",
+        "format": "uuid",
+        "description": "UUID of the task to delete"
+      }
+    },
+    "required": ["user_id", "task_id"]
+  },
+  "output_schema": {
+    "type": "object",
+    "properties": {
+      "task_id": {
+        "type": "string",
+        "format": "uuid",
+        "description": "UUID of the deleted task"
+      },
+      "status": {
+        "type": "string",
+        "enum": ["deleted"],
+        "description": "Status indicating successful deletion"
+      },
+      "message": {
+        "type": "string",
+        "description": "Confirmation message"
+      }
+    },
+    "required": ["task_id", "status", "message"]
+  },
+  "error_codes": [
+    {
+      "code": "TASK_NOT_FOUND",
+      "message": "Task with the specified ID does not exist"
+    },
+    {
+      "code": "UNAUTHORIZED",
+      "message": "User does not own this task"
+    },
+    {
+      "code": "DATABASE_ERROR",
+      "message": "Failed to delete task due to database error"
+    }
+  ],
+  "notes": [
+    "Deletion is permanent and cannot be undone",
+    "If the task is part of a recurring series, only this instance is deleted",
+    "Associated notifications may also be deleted based on cascade rules"
+  ]
+}

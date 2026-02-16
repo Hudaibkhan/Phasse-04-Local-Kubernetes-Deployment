@@ -1,0 +1,89 @@
+{
+  "name": "update_task",
+  "description": "Update task title and/or description",
+  "input_schema": {
+    "type": "object",
+    "properties": {
+      "user_id": {
+        "type": "string",
+        "format": "uuid",
+        "description": "UUID of the user who owns the task"
+      },
+      "task_id": {
+        "type": "string",
+        "format": "uuid",
+        "description": "UUID of the task to update"
+      },
+      "title": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 200,
+        "description": "New task title (1-200 characters)"
+      },
+      "description": {
+        "type": "string",
+        "maxLength": 1000,
+        "description": "New task description (max 1000 characters)"
+      }
+    },
+    "required": ["user_id", "task_id"],
+    "minProperties": 3,
+    "note": "At least one of 'title' or 'description' must be provided"
+  },
+  "output_schema": {
+    "type": "object",
+    "properties": {
+      "task_id": {
+        "type": "string",
+        "format": "uuid",
+        "description": "UUID of the updated task"
+      },
+      "status": {
+        "type": "string",
+        "enum": ["pending", "completed"],
+        "description": "Current status of the task"
+      },
+      "title": {
+        "type": "string",
+        "description": "Updated title of the task"
+      },
+      "description": {
+        "type": "string",
+        "description": "Updated description of the task (may be null)"
+      },
+      "updated_at": {
+        "type": "string",
+        "format": "date-time",
+        "description": "When the task was last updated"
+      }
+    },
+    "required": ["task_id", "status", "title"]
+  },
+  "error_codes": [
+    {
+      "code": "TASK_NOT_FOUND",
+      "message": "Task with the specified ID does not exist"
+    },
+    {
+      "code": "UNAUTHORIZED",
+      "message": "User does not own this task"
+    },
+    {
+      "code": "VALIDATION_ERROR",
+      "message": "Input validation failed (title too long, empty, etc.)"
+    },
+    {
+      "code": "NO_CHANGES",
+      "message": "No title or description provided for update"
+    },
+    {
+      "code": "DATABASE_ERROR",
+      "message": "Failed to update task due to database error"
+    }
+  ],
+  "notes": [
+    "This tool only updates title and description",
+    "To change task status, use complete_task tool",
+    "Other fields (priority, due_date, tags) are not modified by this tool"
+  ]
+}
