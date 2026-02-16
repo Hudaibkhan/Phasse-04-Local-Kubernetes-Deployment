@@ -1,0 +1,56 @@
+# Exclude version control
+.git/
+.gitignore
+.gitattributes
+
+# Exclude environment files
+.env
+.env.*
+*.env
+
+# Exclude Python cache and compiled files
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+
+# Exclude virtual environments
+.venv/
+venv/
+ENV/
+env/
+
+# Exclude testing
+tests/
+.pytest_cache/
+.coverage
+htmlcov/
+*.cover
+.hypothesis/
+
+# Exclude documentation
+*.md
+docs/
+
+# Exclude IDE and editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Exclude build artifacts
+build/
+dist/
+*.egg-info/
+
+# Exclude logs
+*.log
+logs/
+
+# Exclude temporary files
+*.tmp
+*.bak
+.DS_Store
+Thumbs.db
